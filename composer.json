@@ -1,0 +1,27 @@
+{
+  "name": "tom-sapletta-com/helpers",
+  "description": "Helpers",
+  "type": "library",
+  "license": "MIT",
+  "keywords": [
+    "Conversion from Array to Collection",
+    "searching and filtering in Collection"
+  ],
+  "homepage": "https://github.com/tom-sapletta-com/helpers",
+  "authors": [
+    {
+      "name": "Tomasz Sapletta",
+      "email": "tom@sapletta.com"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "php": "^5.3.3 || ^7.0",
+    "phpunit/phpunit": "5.5.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "": "src/"
+    }
+  }
+}
