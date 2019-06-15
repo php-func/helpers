@@ -26,4 +26,5 @@ require_once($basePath . 'DictionaryCollection.php');
 require_once($basePath . 'Language.php');
 require_once($basePath . 'Definition.php');
 require_once($basePath . 'DefinitionCollection.php');
+require_once($basePath . 'ArrayFind.php');
 require_once($basePath . 'CountryCode.php');
