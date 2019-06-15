@@ -190,6 +190,11 @@ class Valid
         return true;
     }
 
+    private function isValidShipmentNumber($number)
+    {
+        return preg_match('/^[a-zA-Z0-9_]+$/', $number);
+    }
+
 // Valid("name",[["not_empty"],["length",5]])
 
 }
