@@ -4,7 +4,7 @@ namespace Phpfunc;
 
 use PolkurierWebServiceApi\Exception\ErrorException;
 
-class Valid
+class Valid extends ValidateCore
 {
     public $obj = null;
     public $validatorCollection = [];
@@ -75,15 +75,15 @@ class Valid
         $this->results[$validator->attribute]['all'][$key]['func'] = $func;
         try {
             if (empty($validator->params)) {
-                $status = $this->$func($val);
+                $status = \Phpfunc\Valid::$func($val);
             } else if (!empty($validator->params) && !is_array($validator->params)) {
-                $status = $this->$func($val, $validator->params);
+                $status = \Phpfunc\Valid::$func($val, $validator->params);
             } else if (count($validator->params) === 1) {
-                $status = $this->$func($val, $validator->params[0]);
+                $status = \Phpfunc\Valid::$func($val, $validator->params[0]);
             } else if (count($validator->params) === 2) {
-                $status = $this->$func($val, $validator->params[0], $validator->params[1]);
+                $status = \Phpfunc\Valid::$func($val, $validator->params[0], $validator->params[1]);
             } else if (count($validator->params) === 3) {
-                $status = $this->$func($val, $validator->params[0], $validator->params[1], $validator->params[2]);
+                $status = \Phpfunc\Valid::$func($val, $validator->params[0], $validator->params[1], $validator->params[2]);
             }
 
         } catch (\Exception $ex) {
@@ -138,7 +138,7 @@ class Valid
      * @param $val
      * @return bool
      */
-    public function not_empty($val)
+    public static function not_empty($val)
     {
         return !empty($val);
     }
@@ -147,9 +147,18 @@ class Valid
      * @param $val
      * @return bool
      */
-    public function is_string($val)
+    public static function is_string($val)
     {
         return is_string($val);
+    }
+
+    /**
+     * @param $val
+     * @return bool
+     */
+    public static function is_number($val)
+    {
+        return is_numeric($val);
     }
 
     /**
@@ -157,7 +166,7 @@ class Valid
      * @param int $length
      * @return bool
      */
-    public function length_more_than($val, int $length)
+    public static function length_more_than($val, int $length)
     {
         $len = strlen($val);
         return $len >= $length;
@@ -168,14 +177,21 @@ class Valid
      * @param int $length
      * @return bool
      */
-    public function length_less_than($val, int $length)
+    public static function length_less_than($val, int $length)
     {
         $len = strlen($val);
         return $len <= $length;
     }
 
 
-    public function length_range($val, $min, $max)
+    /**
+     * @param $val
+     * @param $min
+     * @param $max
+     * @return bool
+     * @throws \Exception
+     */
+    public static function length_range($val, $min, $max)
     {
         $len = strlen($val);
         $more_than = $len >= $min;
@@ -190,7 +206,11 @@ class Valid
         return true;
     }
 
-    private function isValidShipmentNumber($number)
+    /**
+     * @param $number
+     * @return false|int
+     */
+    private static function isValidShipmentNumber($number)
     {
         return preg_match('/^[a-zA-Z0-9_]+$/', $number);
     }
